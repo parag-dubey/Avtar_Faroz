@@ -1,0 +1,17 @@
+# Python/Backend ko ignore karein
+venv/
+__pycache__/
+*.pyc
+
+# API Keys aur Secrets ko ignore karein
+.env
+
+# Generated FAISS database ko ignore karein
+feroze_faiss_index/
+
+# Frontend ke node_modules ko ignore karein
+feroze-chat-buddy-main/node_modules/
+feroze-chat-buddy-main/dist/
+
+# OS specific files
+.DS_Store
