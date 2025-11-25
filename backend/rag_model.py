@@ -101,6 +101,8 @@ Question (from the investor):
 Answer (as Feroze Azeez, short, accurate, and first-person):
 """
 
+
+
 # =======================================================
 ## FUNCTION 1: Knowledge Base Loading (FastAPI will call this once)
 # =======================================================

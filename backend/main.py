@@ -2,6 +2,8 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles 
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import sys
 import requests
@@ -15,7 +17,7 @@ from datetime import datetime, timedelta
 from typing import Optional, Dict, List, Any
 from jose import JWTError, jwt
 from dotenv import load_dotenv
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 
 # Load Environment Variables
 load_dotenv()
@@ -346,7 +348,26 @@ async def consult_endpoint(
 
     return ChatResponse(answer=response_text, audio_url=audio_link)
 
+# ==========================================
+# 👇 FRONTEND SERVING CODE (Ye End me Paste karein)
+# ==========================================
 
+# 1. Main Website Route
+@app.get("/")
+async def read_root():
+    # Jab koi website open karega, index.html file bhej do
+    return FileResponse('static/index.html')
+
+# 2. React Router Support (Catch-All)
+@app.get("/{full_path:path}")
+async def catch_all(full_path: str):
+    # Check karo agar file static folder me hai (jaise image.png, logo.ico)
+    file_path = os.path.join("static", full_path)
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    
+    # Agar file nahi mili, toh wapis index.html bhejo (React handle karega)
+    return FileResponse('static/index.html')
 
 
 if __name__ == "__main__":
